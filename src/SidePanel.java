@@ -9,14 +9,15 @@ import java.awt.*;
  */
 public class SidePanel extends JPanel implements ActionListener
 {
-    private JButton goButton, reset, gameOptions, help;
-    private Font f;
-    private Primary p;
+    private final JButton goButton;
+    private final JButton reset;
+    private final JButton help;
+    private final Primary p;
     public SidePanel(Primary p)
     {
         this.p = p;
         // Sets the font for the buttons
-        f = new Font("Arial", Font.PLAIN, BattleGrid.SIZE/2);
+        Font f = new Font("Arial", Font.PLAIN, BattleGrid.SIZE / 2);
         // This button is the button that sets the ships unmovable and put the game into the guessing stage
         goButton = new JButton("Ready!");
         goButton.setEnabled(Primary.getState() == Primary.PLACING_SHIPS);
@@ -62,7 +63,7 @@ public class SidePanel extends JPanel implements ActionListener
     // Opens the information frame to the help message
     public void openHelp()
     {
-        InformationFrame frame = new InformationFrame();
+        new InformationFrame();
     }
     // Sets the "Ready" button enabled when the ships are properly positioned
     public void setReady(boolean b)

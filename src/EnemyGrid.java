@@ -11,14 +11,14 @@ import java.awt.event.*;
 public class EnemyGrid extends BattleGrid implements MouseListener
 {
     public static final int xOff = 2, yOff = 3;
-    private Primary panel;
+    private final Primary panel;
     /**
      * Constructor for objects of class PlayerGrid
      */
     public EnemyGrid(Primary panel)
     {
         super(xOff*SIZE, yOff*SIZE, panel);
-        // Adds a mouselistener to this JPanel
+        // Adds a mouseListener to this JPanel
         addMouseListener(this);
         this.panel = panel;
     }
@@ -39,9 +39,9 @@ public class EnemyGrid extends BattleGrid implements MouseListener
             {
                 // The position affected is determined by dividing the point x and y values by 
                 // the grid square size, and then subtracting the xOff and yOff values.
-                Position pos = getPosition(((int)p.x/SIZE)-xOff, ((int)p.y/SIZE)-yOff);
+                Position pos = getPosition((p.x /SIZE)-xOff, (p.y /SIZE)-yOff);
                 // If the position has not been guessed yet
-                if (pos.getState() == pos.INDECIDED)
+                if (pos.getState() == pos.UNDECIDED)
                 {
                     // If it is covered by a ship
                     if (pos.isCovered())

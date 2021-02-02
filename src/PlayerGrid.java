@@ -8,7 +8,7 @@ import java.awt.*;
 public class PlayerGrid extends BattleGrid
 {
     public static int xOff = 1, yOff = 3;
-    private Primary panel;
+    private final Primary panel;
     /**
      * Constructor for objects of class PlayerGrid
      */
@@ -46,7 +46,7 @@ public class PlayerGrid extends BattleGrid
         {
             // This indirectly sets the "Ready!" button to be enabled or disabled
             panel.setReady(readyStatus);
-            if (readyStatus == true)
+            if (readyStatus)
             {
                 // If all the ships are ready, tell the player to press the ready button
                 setMessage("Press the \"Ready!\" button");

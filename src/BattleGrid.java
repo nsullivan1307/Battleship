@@ -8,16 +8,16 @@ import java.awt.*;
  */
 public class BattleGrid extends JPanel
 {
-    private Position[][] grid;
+    private final Position[][] grid;
     protected int xOff, yOff;
-    public static final Dimension SCREENSIZE = Toolkit.getDefaultToolkit().getScreenSize();
-    public static final int LENGTH = 10, SIZE = (int)SCREENSIZE.getWidth()/50;
-    private int[] nums;
-    private char[] letters;
-    private Font font;
+    public static final Dimension SCREEN = Toolkit.getDefaultToolkit().getScreenSize();
+    public static final int LENGTH = 10, SIZE = (int) SCREEN.getWidth()/50;
+    private final int[] numbers;
+    private final char[] letters;
+    private final Font font;
     protected Battleship[] ships;
     private int shipsSunk;
-    private Primary panel;
+    private final Primary panel;
     protected JLabel hitStatusMessage;
     /**
      * Constructor for objects of class BattleGrid
@@ -49,12 +49,12 @@ public class BattleGrid extends JPanel
         // Sets the font for the status message and the number and letters beside the grid
         font = new Font("Arial", Font.PLAIN, (int)(SIZE*0.84));
         // Initiating the arrays for the numbers and letters beside the grid
-        nums = new int[LENGTH];
+        numbers = new int[LENGTH];
         letters = new char[LENGTH];
         // Initiating the values of the numbers and letters beside the grid
         for (int i = 0; i < LENGTH; i++)
         {
-            nums[i] = i+1;
+            numbers[i] = i+1;
             letters[i] = (char)(65+i);
         }
         // The number of ships that are sunk
@@ -92,7 +92,7 @@ public class BattleGrid extends JPanel
         {
             // Alerts the player that they have sunk a ship
             setMessage("You have sunk a " + ship.getName());
-            // If 5 ships have been sunk, it tellsn the player that they have won
+            // If 5 ships have been sunk, it tells the player that they have won
             if (shipsSunk == 5)
             {
                 setMessage("You Won!");
@@ -104,7 +104,7 @@ public class BattleGrid extends JPanel
         {
             // Alerts the player that the enemy has sunk a ship
             setMessage("The Enemy has sunk a " + ship.getName());
-            // If 5 ships have been sunk, it tellsn the player that they have lost
+            // If 5 ships have been sunk, it tells the player that they have lost
             if (shipsSunk == 5)
             {
                 setMessage("You lost!");
@@ -128,7 +128,7 @@ public class BattleGrid extends JPanel
             page.setColor(Color.BLACK);
             page.fillRect(0, 0, SIZE*(LENGTH+3), yOff-SIZE);
             page.drawString("" + letters[i], xOff-SIZE, SIZE*(i+1)+yOff-15);
-            page.drawString("" + nums[i], SIZE*i+xOff, yOff-15);
+            page.drawString("" + numbers[i], SIZE*i+xOff, yOff-15);
             // Draws the grid
             for (int j = 0; j < LENGTH; j++)
             {

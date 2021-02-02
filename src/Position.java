@@ -9,17 +9,18 @@ import javax.swing.Timer;
  */
 public class Position implements ActionListener
 {
-    private int x, y;
+    private final int x;
+    private final int y;
     private boolean covered;
     // The state of the position is represented by a color.
-    // It can either be hit, miss or neither (indecided)
+    // It can either be hit, miss or neither (undecided)
     private Color state;
-    public final Color WATER = new Color((int)(0.25*255), (int)(0.778*255), (int)(255));
-    public final Color INDECIDED = Color.GRAY, HIT = Color.RED, MISS = Color.WHITE;
-    public static final int OFFSET = (int)BattleGrid.SIZE/3;
+    public final Color WATER = new Color((int)(0.25*255), (int)(0.778*255), 255);
+    public final Color UNDECIDED = Color.GRAY, HIT = Color.RED, MISS = Color.WHITE;
+    public static final int OFFSET = BattleGrid.SIZE /3;
     private Battleship coverShip;
-    private BattleGrid grid;
-    private Timer time;
+    private final BattleGrid grid;
+    private final Timer time;
     public Position(int x, int y, BattleGrid grid)
     {
         // Sets the drawn x and y position and the grid to which it belongs
@@ -28,7 +29,7 @@ public class Position implements ActionListener
         this.grid = grid;
         // It is not covered by default and it has not been guessed
         covered = false;
-        state = INDECIDED;
+        state = UNDECIDED;
         // Creates a timer so that the player can see a message if this position is hit
         time = new Timer(750, this);
     }
@@ -48,7 +49,7 @@ public class Position implements ActionListener
     }
     public void miss()
     {
-        state = Color.WHITE;
+        state = MISS;
     }
     public void hit()
     {
@@ -66,7 +67,7 @@ public class Position implements ActionListener
     public void draw(Graphics page)
     {
         // If the game is in the placing ships state, draw the blue water and the black square
-        // Always draw the peg circle. In other game stages, only the peg cricle needs to be drawn.
+        // Always draw the peg circle. In other game stages, only the peg circle needs to be drawn.
         if (Primary.getState() == Primary.PLACING_SHIPS)
         {
             drawSquare(page);

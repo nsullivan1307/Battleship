@@ -15,7 +15,7 @@ public class DragBox
     protected int x, y, w, h;
     // The panel that the DragBox is put into.
     protected JPanel p;
-    // The Point wher the mouse currently is (defined later)
+    // The Point where the mouse currently is (defined later)
     private Point point1;
     // x and y positions of the mouse, and the x and y positions relative to the top left corner
     private int xp, yp, xRel, yRel;
@@ -25,14 +25,7 @@ public class DragBox
         sel = false;
         movable = true;
     }
-    public void setMovable(boolean move)
-    {
-        movable = move;
-    }
-    public boolean isMovable()
-    {
-        return movable;
-    }
+
     public void setPosition(int x1, int y1)
     {
         // Sets the position
@@ -69,7 +62,7 @@ public class DragBox
         p.addMouseMotionListener(new PositionListener());
         p.addMouseListener(new ClickListener());
     }
-    // Determines if one dragbox intersects this one
+    // Determines if one DragBox intersects this one
     public boolean intersects(DragBox d)
     {
         boolean b = (x < d.getX() + d.getW()) && (d.getX() < x + w);

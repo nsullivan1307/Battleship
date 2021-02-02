@@ -10,17 +10,16 @@ import java.awt.event.*;
 public class Primary extends JPanel implements ActionListener
 {
 
-    private PlayerGrid playerGrid;
-    private EnemyGrid enemyGrid;
-    private SidePanel sp;
-    private JPanel gamePanel;
+    private final PlayerGrid playerGrid;
+    private final EnemyGrid enemyGrid;
+    private final SidePanel sp;
     // These are the state values of the game
     private static int gameState;
     public static final int PLACING_SHIPS = 0, ENEMY_SHIPS = 1;
     public static final int ENEMY_TURN = 2, PLAYER_TURN = 3, END_GAME = 4;
-    private Enemy AI;
-    private BattleFrame frame;
-    private Timer time;
+    private final Enemy AI;
+    private final BattleFrame frame;
+    private final Timer time;
     public Primary(BattleFrame frame)
     {
         this.frame = frame;
@@ -28,8 +27,8 @@ public class Primary extends JPanel implements ActionListener
         gameState = PLACING_SHIPS;
         // Sets the Layout to Border Layout
         setLayout(new BorderLayout());
-        // The gamePanel contains both grids, the playe rand enemy grids
-        gamePanel = new JPanel();
+        // The gamePanel contains both grids, the player and enemy grids
+        JPanel gamePanel = new JPanel();
         gamePanel.setLayout(new GridLayout(1, 2));
         playerGrid = new PlayerGrid(this);
         enemyGrid = new EnemyGrid(this);

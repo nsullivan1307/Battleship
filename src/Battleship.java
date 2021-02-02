@@ -1,5 +1,4 @@
 import java.awt.*;
-import javax.swing.*;
 import java.awt.event.*;
 /**
  * Write a description of class Battleship here.
@@ -12,10 +11,9 @@ public class Battleship extends DragBox implements KeyListener
     // The state of the Battleship (Whether it is validly placed or not)
     private Color state;
     private final Color READY = Color.GREEN, OVERLAP = Color.RED, OUT = Color.GRAY;
-    private int length;
-    private BattleGrid b;
-    private boolean sunk;
-    private Type ship;
+    private final int length;
+    private final BattleGrid b;
+    private final Type ship;
     private int numberHit = 0;
     private boolean visible;
     // This enumerated type defines the name and lengths of the different types of ships
@@ -26,8 +24,8 @@ public class Battleship extends DragBox implements KeyListener
         SUBMARINE(3, "Submarine"),
         CRUISER(3, "Cruiser"),
         DESTROYER(2, "Destroyer");
-        private int size;
-        private String name;
+        private final int size;
+        private final String name;
         Type(int size, String name)
         {
             this.size = size;
@@ -54,7 +52,6 @@ public class Battleship extends DragBox implements KeyListener
         state = OUT;
         // Default: Enemy grid states
         // sunk: whether the ship has been sunk
-        sunk = false;
         // visible: whether the ship is visible
         visible = false;
     }
@@ -81,7 +78,6 @@ public class Battleship extends DragBox implements KeyListener
         numberHit++;
         if (numberHit == length)
         {
-            sunk = true;
             b.sink(this);
             return length;
         }
@@ -108,14 +104,14 @@ public class Battleship extends DragBox implements KeyListener
         {
             for (int i = 0; i < length; i++)
             {
-                b.getPosition(((int)x/BattleGrid.SIZE)-1, ((int)y/BattleGrid.SIZE)+i-3).cover(this);
+                b.getPosition((x /BattleGrid.SIZE)-1, (y /BattleGrid.SIZE)+i-3).cover(this);
             }
         }
         else
         {
             for (int i = 0; i < length; i++)
             {
-                b.getPosition(((int)x/BattleGrid.SIZE)+i-1, ((int)y/BattleGrid.SIZE)-3).cover(this);
+                b.getPosition((x /BattleGrid.SIZE)+i-1, (y /BattleGrid.SIZE)-3).cover(this);
             }
         }
     }
@@ -129,7 +125,7 @@ public class Battleship extends DragBox implements KeyListener
             // If it is movable, then define which state it is in.
             if (movable)
             {
-                // If it is in the Grid, then firgure out if it is intersecting another ship
+                // If it is in the Grid, then figure out if it is intersecting another ship
                 // Otherwise, set the state to out of bounds
                 if (isInGrid())
                 {
@@ -152,8 +148,8 @@ public class Battleship extends DragBox implements KeyListener
                         state = READY;
                         if (!sel)
                         {
-                            x = BattleGrid.SIZE*((int)(x+(BattleGrid.SIZE/2))/BattleGrid.SIZE);
-                            y = BattleGrid.SIZE*((int)(y+(BattleGrid.SIZE/2))/BattleGrid.SIZE);
+                            x = BattleGrid.SIZE*((x+(BattleGrid.SIZE/2)) /BattleGrid.SIZE);
+                            y = BattleGrid.SIZE*((y+(BattleGrid.SIZE/2)) /BattleGrid.SIZE);
                         }
                     }
                 }
@@ -162,7 +158,7 @@ public class Battleship extends DragBox implements KeyListener
                     state = OUT;
                 }
             }
-            // Draw the ship as an elipse in its appropriate colour and
+            // Draw the ship as an ellipse in its appropriate colour and
             // draw the peg holes in the correct direction
             page.setColor(state);
             page.fillOval(x, y, w, h);

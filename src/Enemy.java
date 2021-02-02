@@ -29,16 +29,20 @@ import java.awt.Point;
  */
 public class Enemy
 {
-    private EnemyGrid e;
-    private PlayerGrid p;
-    private Random gen;
+    private final EnemyGrid e;
+    private final PlayerGrid p;
+    private final Random gen;
     // These arrayLists are for the logic of the AI
-    private ArrayList<Point> enemyShips, playerShips, hitPoints, pointsToGuess, highestPriority;
-    private Point[][] possiblePoints;
+    private final ArrayList<Point> enemyShips;
+    private final ArrayList<Point> playerShips;
+    private final ArrayList<Point> hitPoints;
+    private final ArrayList<Point> pointsToGuess;
+    private final ArrayList<Point> highestPriority;
+    private final Point[][] possiblePoints;
     private Point guessPoint;
     private int guess;
-    private int numUnsunkHitPoints;
-    private Primary panel;
+    private int numNotSunkHitPoints;
+    private final Primary panel;
     public Enemy(Primary panel, EnemyGrid e, PlayerGrid p)
     {
         this.e = e;
@@ -46,15 +50,15 @@ public class Enemy
         // Generator for randomly picking points when no obvious ones are available
         gen = new Random();
         // The points for picking the enemy ship locations
-        enemyShips = new ArrayList<Point>();
-        // The possibilities for the playerships
-        playerShips = new ArrayList<Point>();
+        enemyShips = new ArrayList<>();
+        // The possibilities for the player ships
+        playerShips = new ArrayList<>();
         // The points that have been hit
-        hitPoints = new ArrayList<Point>();
+        hitPoints = new ArrayList<>();
         // The priority points to guess (around places known to be a hit)
-        pointsToGuess = new ArrayList<Point>();
+        pointsToGuess = new ArrayList<>();
         // The highest priority points to guess (points along a line defined by two hit points)
-        highestPriority = new ArrayList<Point>();
+        highestPriority = new ArrayList<>();
         // This array contains all of the possible points, for reference
         possiblePoints = new Point[BattleGrid.LENGTH][BattleGrid.LENGTH];
         // Adds every point to the possible player ship points
@@ -68,7 +72,7 @@ public class Enemy
         }
         this.panel = panel;
         // The number points that have been hit but haven't sunk a ship
-        numUnsunkHitPoints = 0;
+        numNotSunkHitPoints = 0;
     }
     // Deploys each of the enemy ships
     public void deployShips()
@@ -86,7 +90,7 @@ public class Enemy
         // row and col are the amounts be which the position increments to choose the ship both horizontally and vertically
         // Essentially they determine which direction the ship goes
         int row = 0, col = 0;
-        // clears the possible loactions for the enemy ships
+        // clears the possible locations for the enemy ships
         enemyShips.clear();
         if (dir == 0)
         {
@@ -123,7 +127,7 @@ public class Enemy
                 }
             }
         }
-        // Sets a rondom possibility as its position
+        // Sets a random possibility as its position
         int num = gen.nextInt(enemyShips.size());
         for (int k = 0; k < ship.getSize(); k++)
         {
@@ -175,12 +179,12 @@ public class Enemy
         {
             // Adds this point to the points that have been hit and increments the number of hits that have not sunk a ship
             hitPoints.add(guessPoint);
-            numUnsunkHitPoints++;
+            numNotSunkHitPoints++;
             // If a ship has been sunk, remove the number of points that ship covers from the
             // number of hits that have not sunk a ship (Since they have now)
             if (status > 1)
             {
-                numUnsunkHitPoints -= status;
+                numNotSunkHitPoints -= status;
             }
             // If any of the surrounding points has not been guessed yet, put that point in the medium priority list
             if (playerShips.contains(new Point(guessPoint.x, guessPoint.y+1)))
@@ -219,7 +223,7 @@ public class Enemy
             }
             // If there are no hits that have not contributed to sinking a ship, then clear the priority lists.
             // This relieves the AI of making unnecessary moves to check the positions around the hits
-            if (numUnsunkHitPoints == 0)
+            if (numNotSunkHitPoints == 0)
             {
                 highestPriority.clear();
                 pointsToGuess.clear();
@@ -235,7 +239,7 @@ public class Enemy
     // and then if the points in its line have not been guessed, add them to the highest priority
     private void checkLine(Point p1, Point p2)
     {
-        // Verifies thay are adjacent
+        // Verifies they are adjacent
         if (Math.pow((p1.x-p2.x), 2) + Math.pow((p1.y-p2.y), 2) == 1)
         {
             // If the points in its line have not been guessed, add them to the highest priority

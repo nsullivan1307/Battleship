@@ -10,6 +10,6 @@ public class BattleshipGame
     public static void main(String[] args)
     {
         // Make a new BattleFrame
-        BattleFrame frame = new BattleFrame();
+        new BattleFrame();
     }
 }
